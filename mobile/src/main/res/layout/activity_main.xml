@@ -1,0 +1,61 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="16dip"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!--//-->
+        <!--//-->
+        <!--//YOU ALWAYS HAVE TO DECLARE THE ACTIVITY IN ANDROIDMANIFEST.XML-->
+        <!--//-->
+        <!--//-->
+
+        <Button
+            android:text="Standard Notification"
+            android:onClick="onStandardNotificationButtonClick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:text="Update Standard Notification"
+            android:onClick="onUpdateStandardNotificationButtonClick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:text="BIG TEXT STYLE Notification"
+            android:onClick = "onBigTextStyleNotificationButtonClick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:text="Big Picture Style Notification"
+            android:onClick="onBigPictureStyleNotificationButtonClick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:text="Inbox Style Notification"
+            android:onClick="onInboxStyleNotificationButtonClick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:text="Build Task Stack"
+            android:onClick="onBuildTaskStackContentIntentClick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:text="Wearable Only Actions"
+            android:onClick="onWearableOnlyActionsClick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</ScrollView>
+
