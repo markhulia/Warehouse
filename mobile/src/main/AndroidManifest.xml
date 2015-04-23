@@ -26,8 +26,12 @@
                 android:value="com.tinyvoice.warehouse.MainActivity" />
         </activity>
         <activity
-            android:name=".chat_detail_activity"
-            android:label="@string/title_activity_chat_detail_activity" >
+            android:name=".ActionFeedbackActivity"
+            android:label="@string/title_activity_action_feedback"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.tinyvoice.warehouse.MainActivity" />
         </activity>
     </application>
 

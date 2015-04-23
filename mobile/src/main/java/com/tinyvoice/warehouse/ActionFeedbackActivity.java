@@ -1,0 +1,23 @@
+package com.tinyvoice.warehouse;
+
+import android.support.v7.app.ActionBarActivity;
+import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.TextView;
+
+
+public class ActionFeedbackActivity extends ActionBarActivity {
+    public static final String EXTRA_ACTION_FEEDBACK = "action_feedback";
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_action_feedback);
+
+        String actionFeedback = getIntent().getStringExtra(EXTRA_ACTION_FEEDBACK);
+        if(actionFeedback != null){
+            ((TextView) findViewById(R.id.action_feedback)).setText(actionFeedback);
+        }
+    }
+}

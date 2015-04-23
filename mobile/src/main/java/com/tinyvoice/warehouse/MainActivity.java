@@ -113,11 +113,83 @@ public static final int NOTIFICATION_ID = 1;
     }
 
     public void onBuildTaskStackContentIntentClick(View view){
+        PendingIntent conversationPendingIntent = getConversationPendingIntent("Preppy Rabbit", 0);
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setContentTitle("Preppy Rabbit")
+                .setContentText("I like carrots")
+                .setSmallIcon(R.drawable.ic_plusone_standard_off_client)
+                .setContentIntent(conversationPendingIntent)
+                .setCategory(Notification.CATEGORY_MESSAGE)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .build();
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(NOTIFICATION_ID, notification);
 
     }
 
-    public void onWearableOnlyActionsClick(View view){
+    private PendingIntent getActionFeedbackPendingIntent(String actionFeedback, int requestCode){
 
+        Intent actionFeedbackIntent = new Intent(this, ActionFeedbackActivity.class);
+        actionFeedbackIntent.putExtra(ActionFeedbackActivity.EXTRA_ACTION_FEEDBACK,actionFeedback);
+
+        TaskStackBuilder taskStackBuilder = TaskStackBuilder.create(this)
+            .addParentStack(ActionFeedbackActivity.class)
+            .addNextIntent(actionFeedbackIntent);
+
+        return taskStackBuilder.getPendingIntent(requestCode, PendingIntent.FLAG_CANCEL_CURRENT);
+    }
+
+    private PendingIntent getMainActivityPendingIntent(){
+        Intent mainActivityIntent = new Intent(this, MainActivity.class);
+        mainActivityIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        return PendingIntent.getActivity(this, 0,
+                mainActivityIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+    }
+    //Perform actions on notifications from wearable only, or wearable and handheld
+    public void onWearableOnlyActionsClick(View view){
+        PendingIntent handheldActionFeedbackPendingIntent =
+                getActionFeedbackPendingIntent("You invoked the handheld only action", 0);
+
+        PendingIntent wearableActionFeedbackPendingIntent =
+                getActionFeedbackPendingIntent("You invoked the wearable only action",1);
+
+        PendingIntent bothActionFeedbackPendingIntent =
+                getActionFeedbackPendingIntent("You invoked the action that appears on both devices",2);
+
+        NotificationCompat.Action handheldOnlyAction = new NotificationCompat.Action(
+                android.R.drawable.ic_media_previous, "Handheld",
+                handheldActionFeedbackPendingIntent);
+
+        NotificationCompat.Action wearableOnlyAction = new NotificationCompat.Action(
+                android.R.drawable.ic_media_next, "Wearable",
+                wearableActionFeedbackPendingIntent);
+
+        NotificationCompat.Action bothAction = new NotificationCompat.Action(
+                android.R.drawable.ic_media_pause, "Both",
+                bothActionFeedbackPendingIntent);
+
+
+        NotificationCompat.WearableExtender wearableExtender = new NotificationCompat.
+                WearableExtender()
+                .addAction(wearableOnlyAction)
+                .addAction(bothAction);
+        PendingIntent mainActivityPendingIntent = getMainActivityPendingIntent();
+        Notification notification = new NotificationCompat.Builder(this)
+                .setContentTitle("Title")
+                .setContentText("Text")
+                .setSmallIcon(android.R.drawable.ic_media_previous)
+                .setContentIntent(mainActivityPendingIntent)
+                .setCategory(Notification.CATEGORY_STATUS)
+                .addAction(bothAction)
+                .extend(wearableExtender)
+                .addAction(handheldOnlyAction)
+                .build();
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(NOTIFICATION_ID, notification);
     }
 
     public void onInboxStyleNotificationButtonClick(View view){
