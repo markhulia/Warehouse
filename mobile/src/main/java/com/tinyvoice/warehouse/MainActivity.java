@@ -1,18 +1,16 @@
 package com.tinyvoice.warehouse;
 
-import android.app.ActivityManager;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.app.TaskStackBuilder;
+import android.annotation.TargetApi;
+import android.app.*;
 import android.content.Intent;
 import android.os.Build;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v4.app.RemoteInput;
+import android.support.v4.app.TaskStackBuilder;
+import android.support.v7.app.*;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
-import android.support.v4.app.NotificationCompat.WearableExtender;
+import android.support.v4.app.*;
 import android.view.View;
 import android.widget.Toast;
 
@@ -198,7 +196,29 @@ public static final int NOTIFICATION_ID = 1;
     //Pending activity passes the context of the app. On weareble,
     // it adds "open Application" action button
 
+    @TargetApi(20)
+    public void onVoiceReplyClick(View view){
+        //below line i from developer.android.com
+       // Intent replyIntent = new Intent(this, activity_chat_detail.class);
 
+        String[] choices = new String[] {"Yes", "No","In a meeting"};
+
+        RemoteInput remoteInput = new RemoteInput.Builder(activity_chat_detail.EXTRA_VOICE_REPLY)
+                .setLabel("Reply")
+                .setChoices(choices)
+                //IF voice input should accept not only predefined commands,
+                //then .setAllowFreeFormInput(true) should be set
+                .setAllowFreeFormInput(false)
+                .build();
+
+        PendingIntent replyPendingIntent = getConversationPendingIntent("Preppy Rabbit", 0);
+        NotificationCompat.Action replyAction =
+                new NotificationCompat.Action.Builder(R.drawable.ic_action_favorite, "Reply", replyPendingIntent)
+                        .addRemoteInput(remoteInput)
+                        .build();
+
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.

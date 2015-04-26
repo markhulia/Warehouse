@@ -40,12 +40,6 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:text="Inbox Style Notification"
-            android:onClick="onInboxStyleNotificationButtonClick"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
             android:text="Build Task Stack"
             android:onClick="onBuildTaskStackContentIntentClick"
             android:layout_width="match_parent"
@@ -54,6 +48,12 @@
         <Button
             android:text="Wearable Only Actions"
             android:onClick="onWearableOnlyActionsClick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <Button
+            android:text="Voice reply"
+            android:onClick="onVoiceReplyClick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>
