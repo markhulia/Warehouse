@@ -3,6 +3,9 @@ package com.tinyvoice.warehouse;
 import android.annotation.TargetApi;
 import android.app.*;
 import android.content.Intent;
+import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Build;
 import android.support.v4.app.RemoteInput;
 import android.support.v4.app.TaskStackBuilder;
@@ -189,10 +192,15 @@ public static final int NOTIFICATION_ID = 1;
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(NOTIFICATION_ID, notification);
     }
-
-    public void onInboxStyleNotificationButtonClick(View view){
-        Toast.makeText(this,"Inbox Style notification", Toast.LENGTH_SHORT).show();
+    //Scale image to the size required by notification
+    private Bitmap getScaledLargeIconFromResource(int resource) {
+        Resources res = getResources();
+        int height = (int) res.getDimension(android.R.dimen.notification_large_icon_height);
+        int width = (int) res.getDimension(android.R.dimen.notification_large_icon_width);
+        Bitmap largeIcon = BitmapFactory.decodeResource(res, resource);
+        return Bitmap.createScaledBitmap(largeIcon, width, height, false);
     }
+
     //Pending activity passes the context of the app. On weareble,
     // it adds "open Application" action button
 
@@ -216,6 +224,26 @@ public static final int NOTIFICATION_ID = 1;
                 new NotificationCompat.Action.Builder(R.drawable.ic_action_favorite, "Reply", replyPendingIntent)
                         .addRemoteInput(remoteInput)
                         .build();
+
+        NotificationCompat.WearableExtender wearableExtender = new NotificationCompat.WearableExtender()
+                .addAction(replyAction);
+
+        Bitmap prettyAvatar = getScaledLargeIconFromResource(R.drawable.apple55);
+
+        Notification notification = new NotificationCompat.Builder(this)
+                .setContentTitle("Ugly Rabbit")
+                .setContentText("Hey Fox")
+                .setSmallIcon(R.drawable.ic_action_good)
+                .setContentIntent(getConversationPendingIntent("Pretty Rabbit", 20))
+                .setCategory(Notification.CATEGORY_MESSAGE)
+                .setPriority(Notification.PRIORITY_HIGH)
+                .setDefaults(Notification.DEFAULT_ALL)
+                .setLargeIcon(prettyAvatar)
+                .extend(wearableExtender)
+                .build();
+
+        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+        notificationManager.notify(NOTIFICATION_ID, notification);
 
 
     }
