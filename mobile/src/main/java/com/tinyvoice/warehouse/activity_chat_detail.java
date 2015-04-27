@@ -24,7 +24,8 @@ public class activity_chat_detail extends ActionBarActivity {
         CharSequence replyText = getMessageText(getIntent());
         if (replyText != null) {
             TextView replyTextView = (TextView) findViewById(R.id.reply);
-            replyTextView.setText("You repliedL: " + replyText);
+            int foo = Integer.parseInt(replyText.toString());
+            replyTextView.setText("You repliedL: " + foo);
         }
         String chattingWith = getIntent().getStringExtra(EXTRA_CHATTING_WITH);
         if (chattingWith != null) {

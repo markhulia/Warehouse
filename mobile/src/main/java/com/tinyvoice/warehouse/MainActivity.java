@@ -206,16 +206,13 @@ public static final int NOTIFICATION_ID = 1;
 
     @TargetApi(20)
     public void onVoiceReplyClick(View view){
-        //below line i from developer.android.com
        // Intent replyIntent = new Intent(this, activity_chat_detail.class);
-
-        String[] choices = new String[] {"Yes", "No","In a meeting"};
-
+        String [] choices = GenerateNumbers.getNumbers();
         RemoteInput remoteInput = new RemoteInput.Builder(activity_chat_detail.EXTRA_VOICE_REPLY)
                 .setLabel("Reply")
                 .setChoices(choices)
-                //IF voice input should accept not only predefined commands,
-                //then .setAllowFreeFormInput(true) should be set
+                .setChoices(choices)
+                //Set false if voice input option should be excluded
                 .setAllowFreeFormInput(true)
                 .build();
 
