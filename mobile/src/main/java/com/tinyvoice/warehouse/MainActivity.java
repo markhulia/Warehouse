@@ -216,7 +216,7 @@ public static final int NOTIFICATION_ID = 1;
                 .setChoices(choices)
                 //IF voice input should accept not only predefined commands,
                 //then .setAllowFreeFormInput(true) should be set
-                .setAllowFreeFormInput(false)
+                .setAllowFreeFormInput(true)
                 .build();
 
         PendingIntent replyPendingIntent = getConversationPendingIntent("Preppy Rabbit", 0);

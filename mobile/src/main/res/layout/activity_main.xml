@@ -34,12 +34,6 @@
             android:layout_height="wrap_content" />
 
         <Button
-            android:text="Big Picture Style Notification"
-            android:onClick="onBigPictureStyleNotificationButtonClick"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
             android:text="Build Task Stack"
             android:onClick="onBuildTaskStackContentIntentClick"
             android:layout_width="match_parent"
