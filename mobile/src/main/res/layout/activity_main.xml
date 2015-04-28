@@ -16,40 +16,39 @@
         <!--//-->
 
         <Button
-            android:text="Standard Notification"
-            android:onClick="onStandardNotificationButtonClick"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:text="Update Standard Notification"
-            android:onClick="onUpdateStandardNotificationButtonClick"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:text="BIG TEXT STYLE Notification"
-            android:onClick = "onBigTextStyleNotificationButtonClick"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
-            android:text="Build Task Stack"
-            android:onClick="onBuildTaskStackContentIntentClick"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-        <Button
             android:text="Wearable Only Actions"
             android:onClick="onWearableOnlyActionsClick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
 
         <Button
             android:text="Voice reply"
             android:onClick="onVoiceReplyClick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
+
+        <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <EditText
+            android:id="@+id/number_of_packages"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/number_of_packages_hint"
+            android:inputType="number"/>
+
+        <Button
+            android:text="@string/send_button"
+            android:onClick="onSendButtonClick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+          />
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>
-

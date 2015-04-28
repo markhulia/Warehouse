@@ -13,7 +13,7 @@
 
     <TextView
         android:text="This Activity is a placeholder for a conversation's history. The app
-only demonstrates how to implement notifications and not an entire chat app."
+                      only demonstrates how to implement notifications and not an entire chat app."
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 

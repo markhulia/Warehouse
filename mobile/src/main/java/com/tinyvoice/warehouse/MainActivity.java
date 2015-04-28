@@ -19,6 +19,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 
@@ -259,6 +260,16 @@ public class MainActivity extends ActionBarActivity {
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(NOTIFICATION_ID, notification);
 
+    }
+
+    //Pass data from input field to SqlStatements to prepare statements
+    public void onSendButtonClick(View view){
+        Intent intent = new Intent(this, SqlStatements.class);
+        EditText editText =  (EditText) findViewById(R.id.number_of_packages);
+        String numberOfPackages = editText.getText().toString();
+        Toast.makeText(this, numberOfPackages+" Items updated", Toast.LENGTH_LONG).show();
+
+      //  intent.put
     }
 
     @Override

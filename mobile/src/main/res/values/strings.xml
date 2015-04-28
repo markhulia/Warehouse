@@ -9,10 +9,9 @@
     <string name="content">You did it Jora</string>
     <string name="title_activity_activity_chat_detail">activity_chat_detail</string>
     <string name="title_activity_chat_detail_activity">chat_detail_activity</string>
-    <!-- <string name="longText">Without BigStyle, only a single line of text would be visible -->
-    <!-- . Any additional text would not appear directly on notification. -->
-    <!-- Well anyways, gg well played</string> -->
     <string name="title_activity_activity_action_feedback">ActionFeedback_Activity</string>
     <string name="title_activity_action_feedback">ActionFeedbackActivity</string>
-
+    <string name="number_of_packages_hint">Enter</string>
+    <string name="send_button">Send</string>
+    <string name="update">Update</string>
 </resources>
