@@ -18,7 +18,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".activity_chat_detail"
+            android:name=".ChatDetailActivity"
             android:label="Conversation"
             android:parentActivityName=".MainActivity" >
             <meta-data
@@ -33,6 +33,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.tinyvoice.warehouse.MainActivity" />
         </activity>
+
+        <receiver
+            android:name=".NotificationBroadcastReceiver"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+               <action android:name="com.tinyvoice.warehouse.SEND_BROADCAST"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

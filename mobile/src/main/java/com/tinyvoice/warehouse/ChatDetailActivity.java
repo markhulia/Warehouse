@@ -1,16 +1,13 @@
 package com.tinyvoice.warehouse;
 
 import android.annotation.TargetApi;
-import android.support.v4.app.RemoteInput;
 import android.content.Intent;
-import android.support.v7.app.*;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.support.v4.app.RemoteInput;
+import android.support.v7.app.ActionBarActivity;
 import android.widget.TextView;
-import android.support.v4.app.*;
 
-public class activity_chat_detail extends ActionBarActivity {
+public class ChatDetailActivity extends ActionBarActivity {
     public static final String EXTRA_CHATTING_WITH = "chatting_with";
     public static final String EXTRA_VOICE_REPLY = "extra_voice_reply";
 
@@ -25,7 +22,7 @@ public class activity_chat_detail extends ActionBarActivity {
         if (replyText != null) {
             TextView replyTextView = (TextView) findViewById(R.id.reply);
             int foo = Integer.parseInt(replyText.toString());
-            replyTextView.setText("You repliedL: " + foo);
+            replyTextView.setText("You replied: " + foo);
         }
         String chattingWith = getIntent().getStringExtra(EXTRA_CHATTING_WITH);
         if (chattingWith != null) {
