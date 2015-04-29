@@ -3,14 +3,13 @@ package com.tinyvoice.warehouse;
 import android.annotation.TargetApi;
 import android.app.Notification;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
-import android.content.Context;
+import android.content.ClipData;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.v4.app.NotificationCompat;
 import android.support.v4.app.NotificationManagerCompat;
 import android.support.v4.app.RemoteInput;
@@ -22,11 +21,21 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class MainActivity extends ActionBarActivity {
     public static final int NOTIFICATION_ID = 1;
-
-
+    public static final String ItemID = "Item Id";
+    public static final String ItemName = "Item Name";
+//    public static final String numberOfPackages = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,64 +51,35 @@ public class MainActivity extends ActionBarActivity {
                 PendingIntent.FLAG_UPDATE_CURRENT);
     }
 
-    public void onStandardNotificationButtonClick(View view) {
-        PendingIntent activityPendingIntent = getActivityPendingIntent();
-        Notification standardNotification = new NotificationCompat.Builder(this)
-                .setContentTitle("Item ID")
-                .setContentText("Standard Text")
-                .setSmallIcon(R.drawable.ic_action_good)
-                .setContentIntent(activityPendingIntent)
-                .setPriority(Notification.PRIORITY_MAX)
-                .build();
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        //issue the notification
-        Toast.makeText(this, "Standard Notification", Toast.LENGTH_SHORT).show();
-        notificationManager.notify(NOTIFICATION_ID, standardNotification);
-    }
 
-    public void onUpdateStandardNotificationButtonClick(View view) {
-        PendingIntent activityPendingIntent = getActivityPendingIntent();
-        Notification updateNotification = new NotificationCompat.Builder(this)
-                .setContentTitle("Update Title")
-                .setContentText("Update Text")
-                .setSmallIcon(R.drawable.ic_action_good)
-                .setContentIntent(activityPendingIntent)
-                .build();
-        Toast.makeText(this, "Update Notification", Toast.LENGTH_SHORT).show();
-        //issue the notification
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(NOTIFICATION_ID, updateNotification);
-    }
-
-
-    public void onBigTextStyleNotificationButtonClick(View view) {
-
-        String longText = "Without BigTextStyle, only a single line of text would be visible. " +
-                "Any additional text would not appear directly on the notification. " +
-                "The entire first line would not even be on the notification if it were too long! " +
-                "Text that doesn't fit in a standard notification becomes ellipsized. " +
-                "That is, the characters that don't fit are removed and replaced by ellipsis.";
-
-        PendingIntent activityPendingIntent = getActivityPendingIntent();
-        Toast.makeText(this, "BIG Text Style notification", Toast.LENGTH_SHORT).show();
-//        NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle()
-//                .bigText(longText);
-
-
-        Notification bigTextStyleNotification = new Notification.Builder(this)
-                .setContentTitle("Aaaw yiis Big Text")
-                .setContentText(longText)
-                .setSmallIcon(R.drawable.ic_action_good)
-                .setContentIntent(activityPendingIntent)
-                .setStyle(new Notification.BigTextStyle()
-                        .bigText(longText))
-                .build();
-
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(NOTIFICATION_ID, bigTextStyleNotification);
-
-    }
+//    public void onBigTextStyleNotificationButtonClick(View view) {
+//
+//        String longText = "Without BigTextStyle, only a single line of text would be visible. " +
+//                "Any additional text would not appear directly on the notification. " +
+//                "The entire first line would not even be on the notification if it were too long! " +
+//                "Text that doesn't fit in a standard notification becomes ellipsized. " +
+//                "That is, the characters that don't fit are removed and replaced by ellipsis.";
+//
+//        PendingIntent activityPendingIntent = getActivityPendingIntent();
+//        Toast.makeText(this, "BIG Text Style notification", Toast.LENGTH_SHORT).show();
+////        NotificationCompat.BigTextStyle bigTextStyle = new NotificationCompat.BigTextStyle()
+////                .bigText(longText);
+//
+//
+//        Notification bigTextStyleNotification = new Notification.Builder(this)
+//                .setContentTitle("Aaaw yiis Big Text")
+//                .setContentText(longText)
+//                .setSmallIcon(R.drawable.ic_action_good)
+//                .setContentIntent(activityPendingIntent)
+//                .setStyle(new Notification.BigTextStyle()
+//                        .bigText(longText))
+//                .build();
+//
+//
+//        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
+//        notificationManager.notify(NOTIFICATION_ID, bigTextStyleNotification);
+//
+//    }
 
     private PendingIntent getConversationPendingIntent(String chattingWith, int requestCode) {
         Intent conversationIntent = new Intent(this, ChatDetailActivity.class);
@@ -113,23 +93,6 @@ public class MainActivity extends ActionBarActivity {
         taskStackBuilder.addNextIntent(conversationIntent);
 
         return taskStackBuilder.getPendingIntent(requestCode, PendingIntent.FLAG_CANCEL_CURRENT);
-    }
-
-    public void onBuildTaskStackContentIntentClick(View view) {
-        PendingIntent conversationPendingIntent = getConversationPendingIntent("Preppy Rabbit", 0);
-
-        Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle("Preppy Rabbit")
-                .setContentText("I like carrots")
-                .setSmallIcon(R.drawable.ic_plusone_standard_off_client)
-                .setContentIntent(conversationPendingIntent)
-                .setPriority(Notification.PRIORITY_HIGH)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .build();
-
-        NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
-        notificationManager.notify(NOTIFICATION_ID, notification);
-
     }
 
     private PendingIntent getActionFeedbackPendingIntent(String actionFeedback, int requestCode) {
@@ -159,23 +122,6 @@ public class MainActivity extends ActionBarActivity {
         PendingIntent wearableActionFeedbackPendingIntent =
                 getActionFeedbackPendingIntent("You invoked the wearable only action", 1);
 
-        //##################################################################################
-        //##################################################################################
-        //##################################################################################
-
-        //Create a broadcast Intent
-
-        //If receiver is in the STOP state app will not be executed if below line
-        //is not included
-       // notificationSendIntent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES);
-        //Send broadcast
-       // this.sendBroadcast(notificationSendIntent);
-
-
-        //##################################################################################
-        //##################################################################################
-        //##################################################################################
-
         PendingIntent bothActionFeedbackPendingIntent =
                 getActionFeedbackPendingIntent("You invoked the action that appears on both devices", 2);
 
@@ -195,8 +141,11 @@ public class MainActivity extends ActionBarActivity {
         NotificationCompat.WearableExtender wearableExtender = new NotificationCompat.
                 WearableExtender()
                 .addAction(wearableOnlyAction)
-                .addAction(bothAction);
+                .addAction(bothAction)
+                .addAction(handheldOnlyAction);
+
         PendingIntent mainActivityPendingIntent = getMainActivityPendingIntent();
+
         Notification notification = new NotificationCompat.Builder(this)
                 .setContentTitle("Title")
                 .setContentText("Text")
@@ -206,6 +155,7 @@ public class MainActivity extends ActionBarActivity {
                 .extend(wearableExtender)
                 .addAction(handheldOnlyAction)
                 .build();
+
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
         notificationManager.notify(NOTIFICATION_ID, notification);
@@ -231,24 +181,33 @@ public class MainActivity extends ActionBarActivity {
                 .setLabel("Reply")
                 .setChoices(choices)
                 .setChoices(choices)
-                        //Set false if voice input option should be excluded
+                //Set false if voice input option should be excluded
                 .setAllowFreeFormInput(true)
                 .build();
 
-        PendingIntent replyPendingIntent = getConversationPendingIntent("Preppy Rabbit", 0);
+        PendingIntent confirmActionPendingIntent =
+                getActionFeedbackPendingIntent("OK (entry updated)", 0);
+
+        PendingIntent replyPendingIntent = getConversationPendingIntent("Preppy Rabbit", 1);
+
+        NotificationCompat.Action confirmAction = new NotificationCompat.Action(
+                android.R.drawable.ic_media_previous, "OK",
+                confirmActionPendingIntent);
+
         NotificationCompat.Action replyAction =
-                new NotificationCompat.Action.Builder(R.drawable.ic_action_favorite, "Reply", replyPendingIntent)
+                new NotificationCompat.Action.Builder(R.drawable.ic_action_favorite, ItemID, replyPendingIntent)
                         .addRemoteInput(remoteInput)
                         .build();
 
         NotificationCompat.WearableExtender wearableExtender = new NotificationCompat.WearableExtender()
+                .addAction(confirmAction)
                 .addAction(replyAction);
 
         Bitmap prettyAvatar = getScaledLargeIconFromResource(R.drawable.apple55);
 
         Notification notification = new NotificationCompat.Builder(this)
-                .setContentTitle("Ugly Rabbit")
-                .setContentText("Hey Fox")
+                .setContentTitle(ItemID)
+                .setContentText(ItemName)
                 .setSmallIcon(R.drawable.ic_action_good)
                 .setContentIntent(getConversationPendingIntent("Pretty Rabbit", 20))
                 .setPriority(Notification.PRIORITY_HIGH)
@@ -263,14 +222,31 @@ public class MainActivity extends ActionBarActivity {
     }
 
     //Pass data from input field to SqlStatements to prepare statements
-    public void onSendButtonClick(View view){
-        Intent intent = new Intent(this, SqlStatements.class);
-        EditText editText =  (EditText) findViewById(R.id.number_of_packages);
-        String numberOfPackages = editText.getText().toString();
-        Toast.makeText(this, numberOfPackages+" Items updated", Toast.LENGTH_LONG).show();
-
-      //  intent.put
-    }
+//    public void onSendButtonClick(View view) {
+//        Intent intent = new Intent(this, SqlStatements.class);
+//        EditText editText = (EditText) findViewById(R.id.number_of_packages);
+//        String numberOfPackages = editText.getText().toString();
+//        Toast.makeText(this, numberOfPackages + " Items updated", Toast.LENGTH_LONG).show();
+//
+//        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+//        nameValuePairs.add(new BasicNameValuePair("item Id", ItemID));
+//        nameValuePairs.add(new BasicNameValuePair("item name", ItemName));
+//        nameValuePairs.add(new BasicNameValuePair("amount ", numberOfPackages));
+//        //NOT COMPLETELY IMPLEMENTED
+//
+//        //DB connection
+//        try{
+//
+//            HttpClient httpClient = new DefaultHttpClient() {
+//
+//            HttpPost httpPost = new HttpPost("http://")
+//
+//            };
+//
+//        }catch (Exception e){
+//
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
