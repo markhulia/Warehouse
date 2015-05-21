@@ -6,8 +6,6 @@ android {
 
     defaultConfig {
         applicationId "com.tinyvoice.warehouse"
-        minSdkVersion 18
-        targetSdkVersion 22
         versionCode 1
         versionName "1.0"
     }
@@ -15,6 +13,20 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    productFlavors{
+        l{
+            minSdkVersion 'android-L'
+            targetSdkVersion 'android-L'
+            compileSdkVersion 'android-L'
+        }
+        old {
+            minSdkVersion 10
+            targetSdkVersion 20
+            //TODO comment second line if build is not compiles for "L"
+            compileSdkVersion 20
         }
     }
 }
